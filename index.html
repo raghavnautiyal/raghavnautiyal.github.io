@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raghav Nautiyal</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <a href="#research">Research</a>
+            <a href="#industry-experience">Industry</a>
+            <a href="#featured-projects">Projects</a>
+        </div>
+        <div class="nav-center">Raghav Nautiyal</div>
+        <div class="nav-right">
+            <a href="https://scholar.google.com/citations?user=oCeOGc0AAAAJ" aria-label="GitHub"><img class="nav-icon" src="media/googlescholar.svg" alt="GitHub Logo"></a>
+            <a href="https://www.linkedin.com/in/raghavnautiyal/" aria-label="LinkedIn"><img class="nav-icon" src="media/linkedin.png" alt="LinkedIn Logo"></a>
+            <a href="mailto:nautiyal@berkeley.edu" aria-label="Email"><img class="nav-icon" src="media/email.svg" alt="Email Logo"></a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="profile-section">
+            <div class="profile-image">
+                <img src="media/profile.jpg" alt="Your professional photo">
+            </div>
+            <div class="profile-content">
+                <h1>Raghav Nautiyal</h1>
+                <div class="location">Berkeley, CA, USA</div>
+                <p>
+                    Hi! I'm Raghav, a Junior at Berkeley studying EECS and a researcher at <a href="https://bair.berkeley.edu/">Berkeley Artifical Intelligence Research (BAIR)</a>. 
+                    I’m super interested in speech and multimodal ML, model evaluation, and agentic systems.
+                    Previously, I've worked on post-training and synthetic data at <a href="https://sarvam.ai">Sarvam AI</a>, and LLM agents for enterprise data analysis at <a href="https://skan.ai">Skan AI</a>.
+                    Outside of work, I lift weights, run, and train boxing.
+                </p>
+            </div>
+        </section>
+
+        <section class="research" id="research">
+            <h2>Research</h2>
+            
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="media/strumstart.png" alt="StrumStart visualization">
+                </div>
+                <div class="project-content">
+                    <h3>StrumStart: A Dataset of 1-on-1 Guitar Lessons for Speech-Music Co-reasoning<span class="conference-tag"> (Ongoing)</span></h3>
+                    <p>Introduces a dataset and benchmark for speech-music co-reasoning in large audio language models (LALMs), collected from real 1-on-1 guitar lessons. Experiments showed 30-40% performance degradation on co-reasoning tasks, highlighting gaps in current multimodal reasoning.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="media/emg2speech.png" alt="EMG-to-Speech experiment visualization">
+                </div>
+                <div class="project-content">
+                    <h3>Towards EMG-to-Speech with a Necklace Form Factor <span class="conference-tag">[Interspeech 2024]</span></h3>
+                    <p>Co-authored <i>Towards EMG-to-Speech with a Necklace Form Factor</i>, investigating silent speech decoding using a wearable EMG neckband. 
+                        Results demonstrate high-accuracy (92.7%) speech classification and strong correlations between EMG and self-supervised speech representations.
+                        Read <a href="https://arxiv.org/abs/2407.21345" target="_blank">here</a>. 
+                    </p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="media/carrot_in_a_box.jpg" alt="Deception game visualization">
+                </div>
+                <div class="project-content">
+                    <h3>Speech To Speech Deception Games<span class="conference-tag"> (Ongoing)</span></h3>
+                    <p> Working on speech-to-speech deception games, training spoken language models to play social deduction games like Carrot in a Box. The project studies reasoning, persuasion, and deception through spoken dialogue and paralinguistic cues rather than text alone.
+                    </p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="media/lbnl.jpg" alt="Climate projects visualization">
+                </div>
+                <div class="project-content">
+                    <h3>Climate Modeling with Machine Learning and Causal Inference<span class="conference-tag"> [Lawrence Berkeley National Laboratory]</span></h3>
+                    <p> 
+                        Applied causal inference to large-scale climate data to identify lagged drivers of extreme US precipitation, spanning anthropogenic and natural factors, with experiments run on the Perlmutter supercomputer at Berkeley Lab. <span class="conference-tag">Spring, 2024</span>
+                        <br><br>
+                        Built end-to-end ML pipelines to predict methane emissions across US coastal wetlands, training Random Forest and MLP models on eddy covariance and chamber data to achieve R² up to 0.78. Check out the <a href="https://drive.google.com/file/d/1uiLw4luVYRPahu5qk6ueAMx5fAbPVqes/view?usp=sharing">poster</a>. <span class="conference-tag">Fall, 2024</span>
+
+                    </p>
+
+                </div>
+            </div>
+        
+        </section>
+
+        <section class="industry-experience" id="industry-experience">
+            <h2>Industry Experience</h2>
+
+            <div class="blog-post-card">
+                <h3>Autonomous LLM Agents for Enterprise Data Analysis @ <u><span class="conference-tag"><a href="https://www.skan.ai/">Skan AI</a></span></u></h3>
+                <p class="post-date">Spring & Summer, 2025</p>
+                <p>
+                    Designed, built, and productionized an autonomous LLM-based data analyst, taking the system from initial concept to deployment. 
+                    The agent explores enterprise datasets, iteratively reasons via code execution and custom tools, and surfaces actionable insights.
+                    Deployed as a core production feature for 8 Fortune 500 customers, reducing insight generation time from weeks to minutes.      
+                </p>
+            </div>
+
+            <div class="blog-post-card">
+                <h3>Post-Training and Synthetic Data Generation @ <u><span class="conference-tag"><a href="https://www.sarvam.ai/">Sarvam AI</a></span></u></h3>
+                <p class="post-date">Summer, 2024</p>
+                <p>
+                    Worked on post-training LLMs for financial data extraction, fine-tuning an open-source LLaMA model with PEFT + LoRA to convert unstructured ledgers into structured JSON for automated reporting. 
+                    Trained model on multi-GPU clusters using DeepSpeed and Slurm, achieving a 30% accuracy improvement over regex baselines and an F1 score of 0.89 for a production customer. 
+                    <br><br>
+                    Designed and built a synthetic data pipeline with LLaMA 3 70B to compensate for the lack of high-quality Indian conversational data, generating 100k+ realistic, single-turn examples grounded in code-mixed speech and region-specific entities for ASR training.                </p>
+            </div>
+        </section>
+
+        <section class="featured-projects" id="featured-projects">
+            <h2>Featured Projects</h2>
+            
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="media/unbreakable.jpeg" alt="CoT Vectors project visualization">
+                </div>
+                <div class="project-content">
+                    <h3>Unbreakable - A Smarter Focus App</span></u></h3>
+                    <p>Unbreakable is an AI-powered focus extension built to move beyond the static site blocking used by focus apps today. 
+                        I built it after repeatedly finding ways around existing blockers by visiting "harmless" sites like email or Wikipedia.
+                        <br><br>Instead of relying on fixed blocklists, Unbreakable uses real-time screen analysis and natural language reasoning to block content that's truly distracting for your current task, based on your stated goal.
+                        If it gets something wrong, you can try to convince it that a page is relevant - and it may reconsider.
+                        Try it out <a href="https://chromewebstore.google.com/detail/unbreakable/npmbeimjlocaknjjagjcdclmgiogofda" target="_blank"> here</a>! 
+                    </p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="media/seelink.avif" alt="SeeLink banner">
+                </div>
+                <div class="project-content">
+                    <h3>SeeLink - A Link Sharing and Collaboration Platform</h3>
+                    <p>
+                        SeeLink was my first large-scale project and my first time taking a product end to end, from idea to launch to real users. 
+                        I built a full-stack link sharing platform with encrypted P2P sharing, collaborative collections, and human-readable link cards powered by automated scraping. 
+                        I grew SeeLink to 6,000+ users (and 45,000+ shared links) including large-scale media and jewellery companies.
+                        I eventually shut it down last year due to rising server costs (thanks, Heroku!).
+                        Check out this demo <a href="https://www.youtube.com/watch?v=bE7VTu5BWpk">video</a>.
+                    </p>
+                </div>
+            </div>
+        
+        
+        </section>
+
+        <section class="social-links">
+            <a href="https://scholar.google.com/citations?user=oCeOGc0AAAAJ" target="_blank">Google Scholar</a>
+            <a href="https://www.linkedin.com/in/raghavnautiyal/" target="_blank">LinkedIn</a>
+            <a href="mailto:nautiyal@berkeley.edu" target="_blank">Email</a>
+        </section>
+
+
+    </main>
+</body>
+</html>
