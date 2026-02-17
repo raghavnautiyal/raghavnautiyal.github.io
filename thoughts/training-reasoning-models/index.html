@@ -60,6 +60,8 @@
                 <li>Critic → evaluates value functions to guide the actor</li>
             </ul>
 
+            <p><strong>GRPO (Group Relative Policy Optimization)</strong> is a policy optimization method that trains language models by comparing multiple sampled outputs relative to one another, rather than relying on an explicit learned value function.</p>
+
             <h3>High-Level Overview of GRPO</h3>
             <p>Imagine you're trying to teach a robot to play a game where it has to choose between different paths to reach a goal. The robot needs to learn which paths are good and which ones are not.</p>
             <p>GRPO helps the robot by:</p>
@@ -73,9 +75,9 @@
                 <li>If A(a<sub>i</sub>) &gt; 0 → the action a<sub>i</sub> performed better than average</li>
                 <li>If A(a<sub>i</sub>) &lt; 0 → the action a<sub>i</sub> performed worse than average</li>
             </ul>
-            <p>Traditional actor-critic architectures estimate a state-value function or action-value function.</p>
+            <p>Traditional actor-critic methods rely on learning a separate value function to compute advantage. GRPO removes this by using group-relative rewards instead.</p>
             <div class="quote">
-                <strong>Key Idea:</strong> Instead of optimizing for some global reward function, GRPO learns from relative comparisons within the sample group.
+                <strong>Key Idea:</strong> Instead of learning a separate value function to estimate advantage, GRPO computes advantage using relative comparisons within a sampled group of outputs.
             </div>
             <ul>
                 <li>GRPO is said to be more efficient and has more stable updates</li>
@@ -101,6 +103,9 @@
             <p>
                 DAPO = <strong>D</strong>ecoupled Clip + <strong>D</strong>ynamic S<strong>a</strong>mpling <strong>P</strong>olicy <strong>O</strong>ptimization
             </p>
+            <p>
+                <strong>DAPO</strong> is a reinforcement learning optimization framework designed to stabilize and improve reasoning-focused LLM training by encouraging exploration, preserving gradient signal, and handling long-form outputs more effectively than PPO or GRPO.
+            </p>
 
             <h3>Main Tricks Introduced by DAPO</h3>
 
@@ -114,7 +119,7 @@
             <p>This lets low-probability tokens grow more, encouraging exploration and avoiding entropy collapse.</p>
 
             <h3>2. Dynamic Sampling: Keep Training Signals Useful</h3>
-            <p>When all sampled answers to a prompt are perfect (accuracy = 1), their reward variance is 0 → no gradient → wasted compute.</p>
+            <p>When all sampled answers to a prompt are perfect (accuracy = 1), their reward variance is 0 — no gradient, wasted compute.</p>
             <p><strong>Fix:</strong> Dynamically filter out samples where all responses are either perfect or completely wrong (accuracy = 0 or 1). Only prompts with <strong>partial success</strong> (some right, some wrong) are kept. This ensures gradient updates always have a signal.</p>
 
             <h3>3. Token-Level Policy Gradient Loss: Fair Weighting</h3>
