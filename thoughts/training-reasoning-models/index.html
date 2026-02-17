@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Reasoning Models — Raghav Nautiyal</title>
+    <link rel="stylesheet" href="../../main.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <a href="/">Research</a>
+            <a href="/#industry-experience">Industry</a>
+            <a href="/#featured-projects">Projects</a>
+            <a href="/thoughts">Thoughts</a>
+        </div>
+        <div class="nav-center"><a href="/">Raghav Nautiyal</a></div>
+        <div class="nav-right">
+            <a href="https://scholar.google.com/citations?user=oCeOGc0AAAAJ" aria-label="Google Scholar"><img class="nav-icon" src="../../media/googlescholar.svg" alt="Google Scholar Logo"></a>
+            <a href="https://www.linkedin.com/in/raghavnautiyal/" aria-label="LinkedIn"><img class="nav-icon" src="../../media/linkedin.png" alt="LinkedIn Logo"></a>
+            <a href="mailto:nautiyal@berkeley.edu" aria-label="Email"><img class="nav-icon" src="../../media/email.svg" alt="Email Logo"></a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <article class="blog-post">
+            <h1>Training Reasoning Models: Notes as I Try to Understand GRPO and DAPO</h1>
+            <div class="post-metadata">February 16, 2026</div>
+
+            <p>
+                I got interested in this topic after DeepSeek came out last year, and reasoning models suddenly started making noticeable jumps on major reasoning benchmarks. I tried reading the papers, took notes as I went, and realized that a lot of the gains seemed to be coming from reinforcement learning during post-training rather than just bigger models.
+            </p>
+            <p>
+                I'm currently taking <a href="https://www.posttraining.ai/syllabus" target="_blank">CDSS 94 - Building Thoughtful AI Systems</a> at Berkeley and revisiting these topics, so I figured I'd organize my notes more cleanly here. Below are some notes from my attempt to understand GRPO and DAPO.
+            </p>
+
+            <h2>Notes on GRPO</h2>
+
+            <h3>Policy in RL</h3>
+            <ul>
+                <li>A strategy an agent uses to decide which action to take in a given state</li>
+                <li>Deterministic policy → always selects the same action for a given state</li>
+                <li>Stochastic policy → defines a probability distribution over actions for a given state</li>
+                <li>The goal in RL is to learn an optimal policy that maximizes cumulative reward</li>
+            </ul>
+
+            <h3>Value Function</h3>
+            <ul>
+                <li>How good a state or action is in terms of future rewards</li>
+                <li>State Value (V) → how good it is to be in a state</li>
+                <li>Action Value (Q) → how good it is to take a specific action in a state</li>
+                <li>A <strong>policy</strong> decides what actions to take, whereas the <strong>value function</strong> helps improve the policy by estimating which states or actions can lead to higher rewards</li>
+            </ul>
+
+            <h3>Actor-Critic Architecture</h3>
+            <ul>
+                <li>A popular architecture that combines two components</li>
+                <li>Actor → learns the policy and decides actions</li>
+                <li>Critic → evaluates value functions to guide the actor</li>
+            </ul>
+
+            <h3>High-Level Overview of GRPO</h3>
+            <p>Imagine you're trying to teach a robot to play a game where it has to choose between different paths to reach a goal. The robot needs to learn which paths are good and which ones are not.</p>
+            <p>GRPO helps the robot by:</p>
+            <ul>
+                <li>Trying different paths: the robot samples a few different actions from its current strategy (policy)</li>
+                <li>Comparing how well each path worked</li>
+                <li>Making small changes to its strategy to improve performance</li>
+            </ul>
+            <p>GRPO uses group-based comparisons, where it samples N actions instead of just 1. Each sample is evaluated using a reward function. The advantage score is computed by comparing each action's reward to the average reward of the group:</p>
+            <ul>
+                <li>If A(a<sub>i</sub>) &gt; 0 → the action a<sub>i</sub> performed better than average</li>
+                <li>If A(a<sub>i</sub>) &lt; 0 → the action a<sub>i</sub> performed worse than average</li>
+            </ul>
+            <p>Traditional actor-critic architectures estimate a state-value function or action-value function.</p>
+            <div class="quote">
+                <strong>Key Idea:</strong> Instead of optimizing for some global reward function, GRPO learns from relative comparisons within the sample group.
+            </div>
+            <ul>
+                <li>GRPO is said to be more efficient and has more stable updates</li>
+                <li>KL divergence keeps the difference between the new and old probability distributions of the policy under a constant, making sure the new policy isn't deviating too much from the old one</li>
+            </ul>
+
+            <h2>Notes on DAPO</h2>
+
+            <h3>Keywords</h3>
+            <ul>
+                <li><strong>PPO</strong> (Proximal Policy Optimization) → a technique popular in RLHF. Clipping is used to make sure the model doesn't change too drastically after each timestep.
+                    <ul>
+                        <li>Tokens with lower probability represent more exploratory paths; PPO's clipping restricts increasing the probability of these rare tokens</li>
+                        <li>This results in the model sticking to what it already knows (low token probabilities can't grow fast enough)</li>
+                        <li>Exploration dies off → entropy collapse</li>
+                    </ul>
+                </li>
+                <li><strong>AIME benchmark</strong> → a challenging high school math competition used in AI research to test complex mathematical reasoning</li>
+            </ul>
+            <p>
+                DAPO aims to increase transparency by open-sourcing the full system, code, and dataset, making reproduction possible. PPO and GRPO got only about 30 points on the AIME benchmark, unlike DeepSeek which had 47.
+            </p>
+            <p>
+                DAPO = <strong>D</strong>ecoupled Clip + <strong>D</strong>ynamic S<strong>a</strong>mpling <strong>P</strong>olicy <strong>O</strong>ptimization
+            </p>
+
+            <h3>Main Tricks Introduced by DAPO</h3>
+
+            <h3>1. Clip Higher</h3>
+            <p>In normal PPO, clipping limits how much probabilities of actions (tokens) can change. This often hurts low-probability (exploratory) tokens.</p>
+            <p>DAPO separates the clipping thresholds:</p>
+            <ul>
+                <li>Sets a smaller lower bound (ε<sub>low</sub> = 0.2)</li>
+                <li>But increases the upper bound (ε<sub>high</sub> = 0.28)</li>
+            </ul>
+            <p>This lets low-probability tokens grow more, encouraging exploration and avoiding entropy collapse.</p>
+
+            <h3>2. Dynamic Sampling: Keep Training Signals Useful</h3>
+            <p>When all sampled answers to a prompt are perfect (accuracy = 1), their reward variance is 0 → no gradient → wasted compute.</p>
+            <p><strong>Fix:</strong> Dynamically filter out samples where all responses are either perfect or completely wrong (accuracy = 0 or 1). Only prompts with <strong>partial success</strong> (some right, some wrong) are kept. This ensures gradient updates always have a signal.</p>
+
+            <h3>3. Token-Level Policy Gradient Loss: Fair Weighting</h3>
+            <p><strong>Problem:</strong> In GRPO, long responses (more tokens) get averaged down. So high-quality long answers or bad long answers don't get proper credit or blame.</p>
+            <p><strong>Fix:</strong> Switch from sample-level loss (per-response) to <strong>token-level loss</strong>. This gives:</p>
+            <ul>
+                <li>More precise gradient updates</li>
+                <li>Better handling of reasoning sequences of different lengths</li>
+                <li>Penalizes gibberish in long outputs</li>
+            </ul>
+
+            <h3>4. Overlong Reward Shaping: Tame Long Responses</h3>
+            <p><strong>Problem:</strong> Some outputs exceed max length and get truncated. Penalizing them harshly introduces reward noise, even if the reasoning was fine.</p>
+            <p><strong>Fix:</strong></p>
+            <ul>
+                <li>First, mask overlong samples from loss entirely</li>
+                <li>Then, apply a <strong>Soft Overlong Penalty</strong>: gradually reduce reward the longer it gets past a threshold (rather than hard-cutting it)</li>
+            </ul>
+            <p>This stabilizes training and avoids penalizing complex reasoning unfairly.</p>
+
+            <hr>
+
+            <p>
+                These are the notes I took while trying to understand how reasoning models are trained. A lot of the visible improvements in reasoning performance seem tightly connected to these post-training RL details rather than just larger models.
+            </p>
+
+        </article>
+
+        <div class="back-link">
+            <a href="/thoughts">← All thoughts</a>
+        </div>
+    </main>
+</body>
+</html>

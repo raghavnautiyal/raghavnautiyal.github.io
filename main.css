@@ -276,8 +276,34 @@ html {
     text-decoration: underline;
 }
 
+/* Blog listing link wrapper */
+.blog-post-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.blog-post-card-link:hover {
+    text-decoration: none;
+}
+
 .blog-post-card:hover {
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+.post-date {
+    color: #888;
+    font-size: 0.85rem;
+    margin-top: -0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.post-preview {
+    color: var(--muted-text);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
 }
 
 .blog-post-card h3 {
