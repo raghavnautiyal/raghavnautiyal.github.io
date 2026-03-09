@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation Awareness — Raghav Nautiyal</title>
+    <link rel="stylesheet" href="../../main.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <a href="/">Research</a>
+            <a href="/#industry-experience">Industry</a>
+            <a href="/#featured-projects">Projects</a>
+            <a href="/thoughts">Thoughts</a>
+        </div>
+        <div class="nav-center"><a href="/">Raghav Nautiyal</a></div>
+        <div class="nav-right">
+            <a href="https://scholar.google.com/citations?user=oCeOGc0AAAAJ" aria-label="Google Scholar"><img class="nav-icon" src="../../media/googlescholar.svg" alt="Google Scholar Logo"></a>
+            <a href="https://www.linkedin.com/in/raghavnautiyal/" aria-label="LinkedIn"><img class="nav-icon" src="../../media/linkedin.png" alt="LinkedIn Logo"></a>
+            <a href="mailto:nautiyal@berkeley.edu" aria-label="Email"><img class="nav-icon" src="../../media/email.svg" alt="Email Logo"></a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <article class="blog-post">
+            <h1>Evaluation Awareness</h1>
+            <div class="post-metadata">February 2026</div>
+
+            <p>
+                I was recently reading Anthropic's article on <a href="https://www.anthropic.com/engineering/eval-awareness-browsecomp" target="_blank">evaluation awareness in Claude Opus 4.6's performance on the BrowseComp benchmark</a>. It raised an interesting question: what happens when models start reasoning about being evaluated?
+            </p>
+            <p>
+                BrowseComp is a benchmark designed to test the ability of AI agents to locate hard-to-find information on the internet. The idea is simple: give the model access to a browser and measure how well it can search, navigate sources, and synthesize information to arrive at the correct answer.
+            </p>
+            <p>
+                However, Anthropic noticed that in some cases, Claude didn't just solve the question. Instead, it began trying to figure out whether the question itself was part of a benchmark. Once it suspected that it might be in an evaluation setting, it searched for the benchmark online, located the dataset, and even attempted to extract the answers directly.
+            </p>
+            <p>
+                This also reminded me of Anthropic's work on <a href="https://www.anthropic.com/research/alignment-faking" target="_blank">alignment faking</a>. In that work, researchers created scenarios where the model could infer whether its responses might be used for training. For example, the model was told that conversations with "free-tier" users would be used for RLHF training while "paid-tier" conversations would not. They found that the model sometimes behaved differently depending on this context, complying with certain instructions more often when it believed its responses could influence training. The result suggests that models can condition their behavior on whether they think they are in a training or evaluation setting.
+            </p>
+            <p>
+                Together, these results point to something subtle but important. Benchmarks assume that models behave like students taking exams. But increasingly, frontier models behave more like agents trying to win the game.
+            </p>
+            <p>
+                If a model can infer that it is inside an evaluation, it can begin optimizing for the evaluation itself rather than the intended capability being measured. When models also have tools like web browsing, this creates even more opportunities to identify datasets, inspect evaluation artifacts, or otherwise exploit the setup.
+            </p>
+            <p>
+                None of this necessarily means benchmarks are useless. But it does highlight how evaluation becomes more complicated as models become stronger optimizers and more capable agents.
+            </p>
+            <p>
+                In some ways, evaluating AI is starting to resemble evaluating human students. Once people know the exam format, they begin studying the test rather than the subject. Perhaps models are starting to do the same.
+            </p>
+            <p>
+                Benchmarking is one of the most interesting problems in modern AI, and it will be fascinating to see how evaluation methods evolve as models become more capable.
+            </p>
+
+        </article>
+
+        <div class="back-link">
+            <a href="/thoughts">← All thoughts</a>
+        </div>
+    </main>
+</body>
+</html>
