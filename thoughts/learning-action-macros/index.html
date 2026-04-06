@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Action Macros for Computer-Use Agents — Raghav Nautiyal</title>
+    <link rel="stylesheet" href="../../main.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <a href="/">Research</a>
+            <a href="/#industry-experience">Industry</a>
+            <a href="/#featured-projects">Projects</a>
+            <a href="/thoughts">Thoughts</a>
+        </div>
+        <div class="nav-center"><a href="/">Raghav Nautiyal</a></div>
+        <div class="nav-right">
+            <a href="https://scholar.google.com/citations?user=oCeOGc0AAAAJ" aria-label="Google Scholar"><img class="nav-icon" src="../../media/googlescholar.svg" alt="Google Scholar Logo"></a>
+            <a href="https://www.linkedin.com/in/raghavnautiyal/" aria-label="LinkedIn"><img class="nav-icon" src="../../media/linkedin.png" alt="LinkedIn Logo"></a>
+            <a href="mailto:nautiyal@berkeley.edu" aria-label="Email"><img class="nav-icon" src="../../media/email.svg" alt="Email Logo"></a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <article class="blog-post">
+            <h1>Learning Action Macros for Computer-Use Agents</h1>
+            <div class="post-metadata">April 6, 2026</div>
+
+            <p>
+                As part of <a href="https://www.posttraining.ai/syllabus" target="_blank">CDSS 94: Building Thoughtful AI Systems</a> at Berkeley, my teammates and I were working on a browser agent to automate online e-commerce tasks such as Amazon order fulfillment. While working with it, we noticed how often the agent repeats the same sequences: searching, filtering, navigating pages, adding items to cart.
+            </p>
+            <p>
+                That led us to a question: could we mine these repeated action chunks from traces and expose them as higher-level "macros"? Instead of reasoning step by step, a browser agent might call something like <code>search(query)</code> or <code>open_product(id)</code>, learned directly from its (or other agents') past behavior.
+            </p>
+            <p>
+                Our early, very preliminary experiments make us think this might reduce the number of decisions an agent has to make. In principle, that could mean fewer model calls and less planning depth, though it is still unclear how much it would affect actual browser execution time.
+            </p>
+            <p>
+                It also seems possible that this depends a lot on the setting. In more structured workflows, like order fulfillment, form filling, or account management, repeated patterns may be easier to surface. On broader web tasks, there may simply not be enough consistency for useful abstractions to emerge.
+            </p>
+            <p>
+                We're excited to keep exploring whether collecting traces across representative tasks can surface reusable macros, and whether giving agents access to them might make browser agents both cheaper and better, especially on more complex tasks where too much effort is spent just navigating the UI.
+            </p>
+
+        </article>
+
+        <div class="back-link">
+            <a href="/thoughts">← All thoughts</a>
+        </div>
+    </main>
+</body>
+</html>
