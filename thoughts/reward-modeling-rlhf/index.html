@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reward Modeling and RLHF — Raghav Nautiyal</title>
+    <link rel="stylesheet" href="../../main.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <a href="/">Research</a>
+            <a href="/#industry-experience">Industry</a>
+            <a href="/#featured-projects">Projects</a>
+            <a href="/thoughts">Thoughts</a>
+        </div>
+        <div class="nav-center"><a href="/">Raghav Nautiyal</a></div>
+        <div class="nav-right">
+            <a href="https://scholar.google.com/citations?user=oCeOGc0AAAAJ" aria-label="Google Scholar"><img class="nav-icon" src="../../media/googlescholar.svg" alt="Google Scholar Logo"></a>
+            <a href="https://www.linkedin.com/in/raghavnautiyal/" aria-label="LinkedIn"><img class="nav-icon" src="../../media/linkedin.png" alt="LinkedIn Logo"></a>
+            <a href="mailto:nautiyal@berkeley.edu" aria-label="Email"><img class="nav-icon" src="../../media/email.svg" alt="Email Logo"></a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <article class="blog-post">
+            <h1>Reward Modeling and RLHF</h1>
+            <div class="post-metadata">April 26, 2026</div>
+
+            <p>
+                I've been trying to build some intuition for reward modeling and RLHF recently. It shows up everywhere in modern LLMs, and I wanted to understand what is actually going on under the hood. So I figured I'd try to organize my thoughts.
+            </p>
+            <p>
+                At a high level, RLHF (reinforcement learning from human feedback) is just reinforcement learning, but where the reward function isn't given. We have to learn it.
+            </p>
+            <p>
+                In standard RL, you assume there's some reward signal telling you what's good or bad, and you optimize a policy to maximize expected reward over trajectories. RLHF fits into this loop, but replaces the "true" reward with a learned one.
+            </p>
+
+            <h2>Reward Modeling</h2>
+            <p>
+                Instead of asking humans to assign scalar rewards, we usually collect preferences. Given two model outputs, which one is better? From a dataset of these comparisons, we train a reward model that scores outputs so that preferred ones get higher scores. Under the hood, this often looks like a Bradley-Terry style setup where we maximize the probability that the preferred output has higher reward than the rejected one.
+            </p>
+            <p>
+                Once you have this reward model, you treat it like a proxy for human judgment. Now you can run RL, typically policy gradient methods, to fine-tune the base model so that it generates outputs that score higher under this learned reward.
+            </p>
+
+            <h2>The Pipeline</h2>
+            <p>Conceptually, it's pretty clean:</p>
+            <ul>
+                <li><strong>Supervised fine-tuning</strong> gets you reasonable behavior</li>
+                <li><strong>Reward modeling</strong> defines what "good" means</li>
+                <li><strong>RL</strong> pushes the model toward that notion of good</li>
+            </ul>
+            <p>But a few subtleties make this tricky.</p>
+            <p>
+                First, reward models are imperfect. If the policy starts exploiting quirks in the reward model, you get reward hacking, outputs score high but are not actually better.
+            </p>
+            <p>
+                Second, policy gradients in this setting are noisy and high variance, which shows up in standard RL too. That makes training unstable, so methods like PPO or DPO add constraints to keep updates small.
+            </p>
+            <p>
+                Third, the whole system is somewhat circular. The reward model is trained on data from earlier policies, but then used to optimize newer ones. This shift in distribution can cause issues.
+            </p>
+
+            <hr>
+
+            <p>
+                Overall, RLHF feels less like a single clean algorithm and more like a pipeline that works because each piece compensates for the others. But the core idea is simple: learn what humans prefer, then optimize for it.
+            </p>
+
+        </article>
+
+        <div class="back-link">
+            <a href="/thoughts">← All thoughts</a>
+        </div>
+    </main>
+</body>
+</html>
